@@ -61,16 +61,23 @@
       color: #d2e7ff;
     }
 
-    .close-btn {
-      position: absolute;
-      top: 12px;
-      right: 16px;
-      background: transparent;
+    .btn-entendido {
+      margin-top: 16px;
+      background-color: #ffffff;
+      color: #1a3a68;
       border: none;
-      font-size: 20px;
-      color: #fff;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      display: inline-block;
+    }
+
+    .btn-entendido:hover {
+      background-color: #e0eaff;
     }
 
     .hidden {
@@ -82,22 +89,17 @@
 
   <div class="popup-container" id="popupContainer">
     <div class="popup">
-      <button class="close-btn" onclick="fecharPopup()">×</button>
-      <img src="https://i.ibb.co/Jjp8y03b/Ativo-4.png" alt="Banner do comunicado" />
+      <img src="https://i.ibb.co/q3BLNdCb/Ativo-3.png" alt="Banner do comunicado" />
       <h2>Comunicado Importante</h2>
       <p>
-        Informamos que, ao contrário do que tem sido divulgado por outras administradoras, a comercialização dos planos <strong>Proasa Saúde</strong> segue normalmente.
+        Informamos que, ao contrário do que tem sido divulgado por outras administradoras, a comercialização dos planos <strong>Tec Group Proaza Saúde</strong> segue normalmente.
       </p>
       <p>✅ Estamos operando com total regularidade.</p>
       <p class="hashtag">#VemSerFelizNaTec</p>
+
+      <a class="btn-entendido" href="https://tecgroup.com.br/" target="_blank">Entendido</a>
     </div>
   </div>
-
-  <script>
-    function fecharPopup() {
-      document.getElementById('popupContainer').classList.add('hidden');
-    }
-  </script>
 
 </body>
 </html>
