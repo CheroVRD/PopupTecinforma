@@ -4,19 +4,57 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Popup Comunicado</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Link do Google Fonts atualizado para Montserrat Bold (700) -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
-      background-color: #f2f2f2; /* Cor de fundo para visualização da página atrás do popup */
+      background-color: #050810; /* Fundo escuro para a página principal */
+      color: #f0f0f0; /* Cor de texto clara para a página principal */
+      animation: movingPageBackgroundLight 25s linear infinite alternate; /* Animação de luz no fundo */
+      overflow-x: hidden; /* Previne scrollbars da animação de fundo */
+    }
+
+    /* Animação de luz azul para o fundo da página */
+    @keyframes movingPageBackgroundLight {
+      0% {
+        background-image: 
+          radial-gradient(circle at 10% 20%, rgba(30, 100, 220, 0.25) 0%, transparent 35%),
+          radial-gradient(circle at 90% 80%, rgba(50, 80, 190, 0.2) 0%, transparent 40%);
+        background-color: #050810;
+      }
+      25% {
+        background-image: 
+          radial-gradient(circle at 50% 50%, rgba(35, 110, 210, 0.3) 0%, transparent 30%),
+          radial-gradient(circle at 20% 90%, rgba(55, 70, 180, 0.25) 0%, transparent 45%);
+        background-color: #070a12;
+      }
+      50% {
+        background-image: 
+          radial-gradient(circle at 80% 10%, rgba(40, 120, 230, 0.25) 0%, transparent 35%),
+          radial-gradient(circle at 15% 75%, rgba(60, 90, 200, 0.2) 0%, transparent 40%);
+        background-color: #050810;
+      }
+      75% {
+        background-image: 
+          radial-gradient(circle at 30% 60%, rgba(30, 100, 220, 0.3) 0%, transparent 30%),
+          radial-gradient(circle at 70% 30%, rgba(50, 80, 190, 0.25) 0%, transparent 45%);
+        background-color: #070a12;
+      }
+      100% {
+        background-image: 
+          radial-gradient(circle at 10% 20%, rgba(35, 110, 210, 0.25) 0%, transparent 35%),
+          radial-gradient(circle at 90% 80%, rgba(55, 70, 180, 0.2) 0%, transparent 40%);
+        background-color: #050810;
+      }
     }
 
     .popup-container {
       position: fixed; /* Mantém o popup fixo na tela durante o scroll */
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4); /* Fundo semi-transparente */
+      background: rgba(0,0,0,0.5); /* Overlay um pouco mais escuro */
       display: flex; /* Habilita flexbox */
       justify-content: center; /* Centraliza o popup horizontalmente */
       align-items: center; /* Centraliza o popup verticalmente */
@@ -24,133 +62,129 @@
     }
 
     .popup {
-      position: relative; /* Necessário para o posicionamento do ::after */
-      background: linear-gradient(-45deg, #1a3a68, #4d7ac7); /* Gradiente de fundo do popup */
-      color: #fff; /* Cor do texto */
-      border-radius: 10px; /* Bordas arredondadas */
-      padding: 24px; /* Espaçamento interno */
-      max-width: 400px; /* Largura máxima do popup */
-      margin: 20px; /* Margem para evitar que o popup cole nas bordas da tela */
-      text-align: center; /* Alinhamento do texto ao centro */
-      font-family: 'Montserrat', sans-serif; /* Fonte especificada */
-      overflow: hidden; /* Para garantir que a borda (via ::after) não cause problemas com o layout */
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Sombra estática sutil */
+      position: relative; 
+      background: #181a25; 
+      color: #fff; 
+      border-radius: 10px; 
+      padding: 24px; 
+      max-width: 400px; 
+      margin: 20px; 
+      text-align: center; 
+      font-family: 'Montserrat', sans-serif; 
+      overflow: hidden; 
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3); 
     }
 
     /* Pseudo-elemento para criar a borda de gradiente animada */
     .popup::after {
       content: "";
       position: absolute;
-      inset: 0; /* Cobre toda a área do elemento pai (.popup) */
-      border-radius: inherit; /* Herda o border-radius do .popup */
-      padding: 4px; /* Define a espessura da borda para 4px */
-      
-      /* Gradiente com diferentes tons de azul para a borda */
+      inset: 0; 
+      border-radius: inherit; 
+      padding: 4px; 
       background: linear-gradient(to left, steelblue, dodgerblue, deepskyblue, steelblue);
-      background-size: 200% 100%; /* Gradiente 2x mais largo para permitir o movimento */
-      
-      /* Animação para mover o gradiente da borda */
+      background-size: 200% 100%; 
       animation: animated-blue-border 3s linear infinite;
-
-      /* Técnica de máscara para criar o efeito de borda */
       -webkit-mask:
-        linear-gradient(#fff 0 0) content-box, /* Mantém a área de conteúdo (interna ao padding) */
-        linear-gradient(#fff 0 0); /* Cobre o elemento inteiro */
-      -webkit-mask-composite: xor; /* Operação XOR para manter apenas a área do padding (a borda) */
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0); 
+      -webkit-mask-composite: xor; 
       mask:
         linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
-      mask-composite: exclude; /* Equivalente padrão ao xor para mask */
-      
-      pointer-events: none; /* Garante que a borda não interfira com interações do mouse */
-      z-index: 1; /* Garante que a borda fique sobre o background do .popup mas abaixo do conteúdo se necessário */
+      mask-composite: exclude; 
+      pointer-events: none; 
+      z-index: 1; 
     }
 
-    /* Keyframes para a animação da borda azul */
     @keyframes animated-blue-border {
-      0% {
-        background-position: 0% center; /* Posição inicial do gradiente */
-      }
-      100% {
-        background-position: -100% center; /* Move o gradiente para a esquerda em uma largura do elemento */
-      }
+      0% { background-position: 0% center; }
+      100% { background-position: -100% center; }
+    }
+    
+    /* Estilo para a imagem do logo */
+    #logoImage {
+      max-width: 150px; /* Largura máxima do logo */
+      height: auto; /* Altura automática para manter proporção */
+      margin-bottom: 10px; /* Espaço entre o logo e o texto animado */
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 2; /* Acima da borda animada */
     }
 
-    .popup img {
-      width: 100%;
-      max-height: 180px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 16px;
-      position: relative; /* Para garantir que a imagem fique acima da borda ::after se necessário */
+    #imageSlot { /* Imagem de comunicado abaixo do conteúdo */
+      width: 100%; 
+      height: 150px; 
+      object-fit: cover; 
+      border-radius: 8px; 
+      margin-top: 20px; /* Espaço acima da imagem do comunicado */
+      margin-bottom: 15px; 
+      display: block; 
+      position: relative; 
       z-index: 2; 
-      animation: pulse-image-fast-1s 1s infinite ease-in-out; /* Animação de pulsação rápida */
     }
 
-    /* Keyframes para a animação de pulsação rápida da imagem */
-    @keyframes pulse-image-fast-1s {
-      0%, 100% { /* Início e fim da animação com tamanho normal */
-        transform: scale(1);
-      }
-      50% { /* Meio da animação, imagem ligeiramente maior */
-        transform: scale(1.05);
-      }
+    .title-animation-container {
+      height: 60px; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px; 
+      overflow: hidden; 
+      width: 100%;
+      position: relative; 
+      z-index: 2; 
     }
 
-    .popup h2, .popup p, .popup .hashtag, .button-wrapper {
-      position: relative; /* Para garantir que o texto fique acima da borda ::after */
-      z-index: 2;
+    #animatedTextElement {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700; 
+      font-size: 2em;   
+      color: #fff;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      white-space: nowrap; 
+      opacity: 0; 
+      transform: translateY(0) translateX(0); 
+      position: absolute; 
+    }
+    
+    #rocketIcon {
+      width: 50px; 
+      height: auto;
+      position: absolute;
+      left: -60px; 
+      top: 50%;
+      transform: translateY(-50%) rotate(0deg); 
+      z-index: 3; 
+      display: none; 
+      transition: left 1s ease-in-out; 
     }
 
-    .popup h2 {
+    .popup .static-content { 
+        position: relative;
+        z-index: 2; 
+    }
+
+    .popup .static-content h2 { 
       margin: 0 0 12px;
       font-size: 22px;
       line-height: 1.2;
     }
 
-    .popup p {
+    .popup .static-content p {
       font-size: 15px;
       line-height: 1.3;
       margin-bottom: 12px;
     }
 
-    .popup .hashtag {
+    .popup .static-content .hashtag {
       font-weight: 600;
       color: #d2e7ff;
     }
-
-    .button-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 16px;
-    }
-
-    .btn-entendido {
-      background-color: #ffffff;
-      color: #1a3a68;
-      border: none;
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.3s ease;
-      display: inline-block;
-    }
-
-    .btn-entendido:hover {
-      background-color: #239aff;
-    }
-
-    .rocket-icon { /* Mantido caso seja reutilizado, mas não está no HTML atual */
-      width: 28px;
-      height: 28px;
-      margin: 0 8px;
-    }
-
-    .hidden {
+    
+    .hidden { 
       display: none;
     }
   </style>
@@ -159,21 +193,191 @@
 
   <div class="popup-container" id="popupContainer">
     <div class="popup">
-      <img src="https://i.ibb.co/Jjp8y03b/Ativo-4.png" alt="Banner do comunicado Proasa Saúde" />
-      <h2>TEC e Proasa:<br> SEGUIMOS COM <b>FORÇA TOTAL</b></h2>
-      <p>
-        Enquanto outras administradoras suspenderam suas vendas, a TEC informa que as vendas dos planos Proasa Saúde seguem aceleradas
-      </p>
-      <p>✅ As vendas </strong>não</strong> param!</p>
-      <p class="hashtag">#VemSerFelizNaTec</p>
+      <!-- Logo adicionada aqui -->
+      <img id="logoImage" src="https://tecgroup.com.br/img/logo-tec_Prancheta%201%20-10.4eb189dc.png" alt="Logo da Empresa">
 
+      <div class="title-animation-container">
+        <h2 id="animatedTextElement"></h2>
+        <img id="rocketIcon" src="https://i.ibb.co/FLWNn05n/Ativo-6.png" alt="Foguete voando">
+      </div>
+
+      <div class="static-content">
+        <h2> SEGUIMOS COM FORÇA TOTAL</h2>
+        <p>
+          Enquanto outras administradoras suspenderam suas vendas, a TEC informa que as vendas dos planos Proasa Saúde seguem <strong>aceleradas</strong>
+        </p>
+        <p>✅  As vendas <strong> não param!</strong></p>
+        <p class="hashtag">#VemSerFelizNaTec</p>
+        <!-- A imagem do comunicado foi movida para baixo do texto estático -->
+        <img id="imageSlot" src="https://i.ibb.co/NnnG58ww/Ret-ngulo-2.png" alt="Slot para imagem do comunicado">
+      </div>
       
     </div>
   </div>
 
-  <div style="padding: 20px; text-align: center;">
-    
+  <div style="padding: 20px; text-align: center; position: relative; z-index: 0;">
+    <h1>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const textElement = document.getElementById('animatedTextElement');
+      const rocketElement = document.getElementById('rocketIcon');
+      const titleContainer = document.querySelector('.title-animation-container');
+
+      const phrases = [
+        { text: "TEC e Proasa", duration: 2500, animationType: "fadeInOut" },
+        { text: "Está a todo ", duration: 3000, animationType: "slideUpDown" },
+        { text: " VAPOR", baseText: "VAPOR", duration: 6000, animationType: "slideSideAndStretch" } 
+      ];
+      let currentPhraseIndex = 0;
+      let stretchInterval;
+      let phraseExitTimeoutId; 
+      let nextPhraseTimeoutId;   
+      let rocketAnimationTimeoutId;
+
+      const FADE_TRANSITION_DURATION = 500; 
+      const SLIDE_TRANSITION_DURATION = 600; 
+      const STRETCH_ANIMATION_INTERVAL = 200; 
+      const ROCKET_ANIMATION_DURATION = 1000; 
+
+      function animatePhrase() {
+        if (phraseExitTimeoutId) clearTimeout(phraseExitTimeoutId);
+        if (nextPhraseTimeoutId) clearTimeout(nextPhraseTimeoutId);
+        if (rocketAnimationTimeoutId) clearTimeout(rocketAnimationTimeoutId);
+        stopStretchAnimation(); 
+        hideRocket();
+
+        const phrase = phrases[currentPhraseIndex];
+        textElement.textContent = phrase.text; 
+        textElement.style.transition = 'none'; 
+        textElement.style.opacity = '0'; 
+        textElement.style.display = 'block'; 
+
+        if (phrase.animationType === "fadeInOut") {
+          textElement.style.transform = 'translateY(0) translateX(0)';
+        } else if (phrase.animationType === "slideUpDown") {
+          textElement.style.transform = 'translateY(30px)'; 
+        } else if (phrase.animationType === "slideSideAndStretch") {
+          textElement.style.transform = 'translateX(-50%)'; 
+        }
+
+        void textElement.offsetWidth;
+
+        let entryDuration = 0;
+        if (phrase.animationType === "fadeInOut") {
+          textElement.style.transition = `opacity ${FADE_TRANSITION_DURATION / 1000}s ease-out, transform ${FADE_TRANSITION_DURATION / 1000}s ease-out`;
+          entryDuration = FADE_TRANSITION_DURATION;
+        } else { 
+          textElement.style.transition = `opacity ${SLIDE_TRANSITION_DURATION / 1000}s ease-out, transform ${SLIDE_TRANSITION_DURATION / 1000}s ease-out`;
+          entryDuration = SLIDE_TRANSITION_DURATION;
+        }
+        textElement.style.opacity = '1';
+        textElement.style.transform = 'translateY(0) translateX(0)'; 
+
+        if (phrase.animationType === "slideSideAndStretch") {
+          setTimeout(() => {
+            if (currentPhraseIndex === phrases.findIndex(p => p.animationType === "slideSideAndStretch")) { 
+                 startStretchAnimation(phrase.baseText, () => {
+                    textElement.style.opacity = '0'; 
+                    textElement.style.transition = `opacity ${FADE_TRANSITION_DURATION / 2000}s ease-out`;
+                    setTimeout(animateRocket, FADE_TRANSITION_DURATION / 2); 
+                 });
+            }
+          }, entryDuration);
+        }
+        
+        const visibleDuration = phrase.duration - entryDuration - (phrase.animationType === "fadeInOut" ? FADE_TRANSITION_DURATION : SLIDE_TRANSITION_DURATION);
+        
+        if (phrase.animationType !== "slideSideAndStretch") {
+            phraseExitTimeoutId = setTimeout(() => {
+            if (phrase.animationType === "fadeInOut") {
+                textElement.style.transition = `opacity ${FADE_TRANSITION_DURATION / 1000}s ease-in, transform ${FADE_TRANSITION_DURATION / 1000}s ease-in`;
+                textElement.style.opacity = '0';
+            } else if (phrase.animationType === "slideUpDown") {
+                textElement.style.transition = `opacity ${SLIDE_TRANSITION_DURATION / 1000}s ease-in, transform ${SLIDE_TRANSITION_DURATION / 1000}s ease-in`;
+                textElement.style.opacity = '0';
+                textElement.style.transform = 'translateY(-30px)'; 
+            }
+
+            const exitDuration = (phrase.animationType === "fadeInOut" ? FADE_TRANSITION_DURATION : SLIDE_TRANSITION_DURATION);
+            nextPhraseTimeoutId = setTimeout(() => {
+                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                animatePhrase(); 
+            }, exitDuration);
+
+            }, visibleDuration);
+        }
+      }
+      
+      function hideRocket() {
+        rocketElement.style.display = 'none';
+        rocketElement.style.left = '-60px'; 
+        rocketElement.style.transition = 'none'; 
+      }
+
+      function animateRocket() {
+        hideRocket(); 
+        textElement.style.display = 'none'; 
+
+        void rocketElement.offsetWidth; 
+
+        rocketElement.style.display = 'block';
+        rocketElement.style.transition = `left ${ROCKET_ANIMATION_DURATION / 1000}s ease-in-out`;
+        rocketElement.style.left = titleContainer.offsetWidth + 60 + 'px'; 
+
+        rocketAnimationTimeoutId = setTimeout(() => {
+          hideRocket();
+          currentPhraseIndex = 0; 
+          animatePhrase();  
+        }, ROCKET_ANIMATION_DURATION + 100); 
+      }
+
+
+      function startStretchAnimation(baseText, onNinthOCallback) {
+        let oCount = 1; 
+        const maxOsPossible = 10; 
+        const restartLoopAtOCount = 9; 
+
+        const parts = baseText.split("O"); 
+        const textPrefix = " " + parts[0];      
+        const textSuffix = parts.length > 1 ? parts[1] : ""; 
+
+        stopStretchAnimation(); 
+        textElement.textContent = textPrefix + "O".repeat(oCount) + textSuffix;
+
+        stretchInterval = setInterval(() => {
+          textElement.textContent = textPrefix + "O".repeat(oCount) + textSuffix;
+
+          if (oCount === restartLoopAtOCount) {
+            stopStretchAnimation(); 
+            if (onNinthOCallback) {
+                onNinthOCallback(); 
+            }
+            return; 
+          }
+
+          oCount++; 
+          if (oCount > maxOsPossible) {
+            oCount = 1; 
+          }
+        }, STRETCH_ANIMATION_INTERVAL);
+      }
+
+      function stopStretchAnimation() {
+        if (stretchInterval) {
+          clearInterval(stretchInterval);
+          stretchInterval = null;
+        }
+      }
+
+      setTimeout(() => {
+        if (textElement && rocketElement && titleContainer) {
+          animatePhrase();
+        }
+      }, 100);
+    });
+  </script>
 
 </body>
 </html>
